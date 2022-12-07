@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LoginController;
 
 
 /*
@@ -21,19 +22,20 @@ use App\Http\Controllers\AuthController;
 //     return view('welcome');
 // });
 
-Route::group(['middleware'=> ['auth:sanctum']], function () {
-Route::get('/', function() {
-return Inertia\Inertia::render('Index');
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/', function () {
+        return Inertia\Inertia::render('Index');
     });
 });
 
 Route::post('/signup', [LoginController::class, 'sign_up']);
 
-Route::get('/login', function() {
+Route::get('/login', function () {
     return Inertia\Inertia::render('Login');
-        })->name('login');
+})->name('login');
 
-Route::get('/redirect', [App\Http\Controllers\AuthController::class, 'redirect']);
-Route::get('/callback', [App\Http\Controllers\AuthController::class, 'callback']);
-    
-    
+
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/redirect', [App\Http\Controllers\AuthController::class, 'redirect']);
+    Route::get('/callback', [App\Http\Controllers\AuthController::class, 'callback']);
+});
