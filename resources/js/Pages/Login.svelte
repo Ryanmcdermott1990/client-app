@@ -2,24 +2,12 @@
     import { onMount } from "svelte";
     import Button from "../ui_components/Button.svelte";
     import { navigate } from "svelte-routing";
-    import getPkce from "oauth-pkce";
-
+    
+    //Lifecycle methods such as onMount are availble to utilise for each time the page renders 
     onMount(() => {
         console.log("the component has mounted");
     });
 
-    // Create a code verifier and a code challenge using auth-pkce
-    let authURL = 'http://127.0.0.0:8000/redirect'
-    
-    getPkce(43, (error, { verifier, challenge }) => {
-        if (!error) {
-            console.log({ verifier, challenge });
-        }
-    });
-
-    // const client_id = {{CLIENT_ID}}
-    // const client_secret = {{CLIENT_SECRET}}
-    // const authURL = {{REDIRECT_URL}}
 </script>
 
 <svelte:head>
@@ -45,10 +33,9 @@
     <div class="content">
         <div class="title m-b-md">
             <p>Login</p>
-        </div>       
-        <button><a href="/redirect">
-            Login with Auth2.0 Server
-        </a></button>
+        </div>
+        <!--The redirect request to the auith-server is triggered from this button-->
+        <button><a href="/redirect"> Login with Auth2.0 Server </a></button>
     </div>
 </div>
 
